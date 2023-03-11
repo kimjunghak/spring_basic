@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
+
 import static com.example.spring_basic.taco.Ingredient.Type;
 
 @SpringBootApplication
@@ -19,16 +21,18 @@ public class SpringBasicApplication {
     @Bean
     public CommandLineRunner dataLoader(IngredientRepository repo) {
         return (args) -> {
-            repo.save(new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
-            repo.save(new Ingredient("COTO", "Corn Tortilla", Type.WRAP));
-            repo.save(new Ingredient("GRBF", "Ground Beef", Type.PROTEIN));
-            repo.save(new Ingredient("CARN", "Carnitas", Type.PROTEIN));
-            repo.save(new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES));
-            repo.save(new Ingredient("LETC", "Lettuce", Type.VEGGIES));
-            repo.save(new Ingredient("CHED", "Cheddar", Type.CHEESE));
-            repo.save(new Ingredient("JACK", "Monterrey Jack", Type.CHEESE));
-            repo.save(new Ingredient("SLSA", "Salsa", Type.SAUCE));
-            repo.save(new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
+            ArrayList<Ingredient> ingredients = new ArrayList<>();
+            ingredients.add(new Ingredient("FLTO", "Flour Tortilla", Type.WRAP));
+            ingredients.add(new Ingredient("COTO", "Corn Tortilla", Type.WRAP));
+            ingredients.add(new Ingredient("GRBF", "Ground Beef", Type.PROTEIN));
+            ingredients.add(new Ingredient("CARN", "Carnitas", Type.PROTEIN));
+            ingredients.add(new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES));
+            ingredients.add(new Ingredient("LETC", "Lettuce", Type.VEGGIES));
+            ingredients.add(new Ingredient("CHED", "Cheddar", Type.CHEESE));
+            ingredients.add(new Ingredient("JACK", "Monterrey Jack", Type.CHEESE));
+            ingredients.add(new Ingredient("SLSA", "Salsa", Type.SAUCE));
+            ingredients.add(new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
+            repo.saveAll(ingredients);
         };
     }
 
