@@ -2,22 +2,18 @@ package com.example.spring_basic.taco.web;
 
 import com.example.spring_basic.taco.Ingredient;
 import com.example.spring_basic.taco.data.IngredientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
 
-  private IngredientRepository ingredientRepo;
+  private final IngredientRepository ingredientRepo;
 
-  @Autowired
-  public IngredientByIdConverter(IngredientRepository ingredientRepo) {
-    this.ingredientRepo = ingredientRepo;
-  }
-  
   @Override
   public Ingredient convert(String id) {
     Optional<Ingredient> optionalIngredient = ingredientRepo.findById(id);

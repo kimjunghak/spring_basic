@@ -3,8 +3,11 @@ package com.example.spring_basic.taco.web;
 import com.example.spring_basic.taco.Ingredient;
 import com.example.spring_basic.taco.Order;
 import com.example.spring_basic.taco.Taco;
+import com.example.spring_basic.taco.Users;
 import com.example.spring_basic.taco.data.IngredientRepository;
 import com.example.spring_basic.taco.data.TacoRepository;
+import com.example.spring_basic.taco.data.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,19 +25,12 @@ import static com.example.spring_basic.taco.Ingredient.Type;
 @Controller
 @RequestMapping("/design")
 @SessionAttributes("order")
+@RequiredArgsConstructor
 public class DesignTacoController {
 
   private final IngredientRepository ingredientRepo;
-
   private final TacoRepository designRepo;
-
-  @Autowired
-  public DesignTacoController(
-          IngredientRepository ingredientRepo,
-          TacoRepository designRepo) {
-    this.ingredientRepo = ingredientRepo;
-    this.designRepo = designRepo;
-  }
+  private final UserRepository userRepo;
 
   @ModelAttribute(name = "order")
   public Order order() {
@@ -46,7 +43,7 @@ public class DesignTacoController {
   }
 
   @GetMapping
-  public String showDesignForm(Model model) {
+  public String showDesignForm(Model model, Principal principal) {
     List<Ingredient> ingredients = new ArrayList<>();
     ingredientRepo.findAll().forEach(ingredients::add);
 
@@ -55,6 +52,10 @@ public class DesignTacoController {
       model.addAttribute(type.toString().toLowerCase(),
               filterByType(ingredients, type));
     }
+
+    String username = principal.getName();
+    Users users = userRepo.findByUsername(username);
+    model.addAttribute("users", users);
 
     return "design";
   }
