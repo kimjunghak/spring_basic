@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,8 @@ public class SpringBasicApplication {
     }
 
     @Bean
+//    @Profile({"dev", "qa"})
+    @Profile("!prod") //prod 프로파일이 활성화되지 않을경우
     public CommandLineRunner dataLoader(IngredientRepository repo) {
         return (args) -> {
             ArrayList<Ingredient> ingredients = new ArrayList<>();

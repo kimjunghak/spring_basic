@@ -1,3 +1,18 @@
 spring:
   jpa:
     open-in-view: false
+
+server:
+  port: 8443
+  ssl:
+    key-store: file:///Users/kimjh/IdeaProjects/spring_basic/mykeys.jks
+    key-store-password: letmein
+    key-password: letmein
+
+logging:
+  level:
+    taco: debug
+
+taco:
+  orders:
+    pageSize: 10
